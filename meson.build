@@ -13,33 +13,42 @@ zmqd_source_dep = declare_dependency(
 deimos_zeromq_dep = dependency('zeromq', fallback: ['deimos-zeromq', 'deimos_zeromq_source_dep'])
 
 examples = [
-   'hwclient.d',
-   'hwserver.d',
-   'identity.d',
-   'msgqueue.d',
-   'mspoller.d',
-   'msreader.d',
-   'mtrelay.d',
-   'mtserver.d',
-   'rrbroker.d',
-   'rrclient.d',
-   'rrworker.d',
-   'rtdealer.d',
-   'rtreq.d',
-   'tasksink2.d',
-   'tasksink.d',
-   'taskvent.d',
-   'taskwork2.d',
-   'taskwork.d',
-   'test_metadata.d',
-   'version.d',
-   'wuclient.d',
-   'wuserver.d',
+   'hwclient',
+   'hwserver',
+   'identity',
+   'interrupt',
+   'lbbroker',
+   'lbbroker2',
+   'msgqueue',
+   'mspoller',
+   'msreader',
+   'mtrelay',
+   'mtserver',
+   'rrbroker',
+   'rrclient',
+   'rrworker',
+   'rtdealer',
+   'rtreq',
+   'syncpub',
+   'syncsub',
+   'psenvpub',
+   'psenvsub',
+   'tasksink2',
+   'tasksink',
+   'taskvent',
+   'taskwork2',
+   'taskwork',
+   'test_metadata',
+   'version',
+   'wuclient',
+   'wuproxy',
+   'wuserver'
 ]
 
-foreach x :  examples
-	executable(x, './examples/' + x,
- 	d_args: ['-i'],
-	include_directories: './examples', # zhelpers
-	dependencies: [zmqd_source_dep])
+foreach x : examples
+	executable(x, './examples/' + x + '.d',
+    	d_args: ['-i'],
+        include_directories: './examples', # zhelpers
+        dependencies: [zmqd_source_dep]
+	)
 endforeach
