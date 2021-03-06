@@ -11,6 +11,10 @@ void main()
 {
     auto publisher = Socket(SocketType.pub);
     publisher.sendHWM = 1_100_000;
+    // zmqd sets the linger period to 0, but the libzmq default is
+    // infinite. We must reset it to infinite, otherwise the example won't
+    // work
+    publisher.linger = infiniteDuration;
     publisher.bind("tcp://*:5561");
 
     // Synchronize with publisher
@@ -28,10 +32,6 @@ void main()
     writeln("Broadcasting messages");
     foreach (int updateNbr; 0 .. 1_000_000)
     {
-        if (updateNbr % 100_000 == 0)
-        {
-            writefln("send: %s", updateNbr);
-        }
         publisher.send("A message");    
     }
     writeln("END");
